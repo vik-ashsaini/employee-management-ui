@@ -1,0 +1,10 @@
+<h2>{{ id ? 'Edit' : 'Add' }} Employee</h2>
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <label>Name:</label>
+  <input formControlName="name"><br>
+  <label>Position:</label>
+  <input formControlName="position"><br>
+  <label>Salary:</label>
+  <input formControlName="salary" type="number"><br>
+  <button type="submit">Save</button>
+</form>
