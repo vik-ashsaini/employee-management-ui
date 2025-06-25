@@ -7,7 +7,7 @@ import { routes } from './app/app.routes';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideHttpClient(), // ✅ this enables HttpClient
+    provideHttpClient(), // ✅ REQUIRED
     provideRouter(routes)
   ]
 });

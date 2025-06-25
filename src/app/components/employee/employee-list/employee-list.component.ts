@@ -6,18 +6,18 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { EmployeeService } from '../../services/employee.service';
+import { EmployeeService } from '../../../services/employee.service';
 import { Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableDataSource } from '@angular/material/table';
-import { EmployeeModel } from '../../models/employee.model';
+import { EmployeeModel } from '../../../models/employee.model';
 
 @Component({
   selector: 'app-employee-list',
   standalone: true,
   imports: [
-    CommonModule, RouterModule,
+    CommonModule,
     MatTableModule, MatPaginatorModule, MatSortModule,
     MatInputModule, MatFormFieldModule, MatButtonModule,
     MatIconModule, MatCardModule
