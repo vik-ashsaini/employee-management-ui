@@ -40,7 +40,7 @@ describe('EmployeeComponent', () => {
 
   it('should delete an employee', () => {
     spyOn(window, 'confirm').and.returnValue(true);
-    component.delete(1);
+    component.deleteEmployee(1);
     expect(mockService.delete).toHaveBeenCalledWith(1);
     expect(mockService.loadEmployees).toHaveBeenCalled();
   });
