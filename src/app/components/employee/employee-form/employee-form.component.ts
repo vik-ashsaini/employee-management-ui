@@ -26,7 +26,8 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
     MatInputModule,
     MatCardModule
   ],
-  templateUrl: './employee-form.component.html'
+  templateUrl: './employee-form.component.html',
+  styleUrl: './employee-form.component.css'
 })
 export class EmployeeFormComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<EmployeeFormComponent>,

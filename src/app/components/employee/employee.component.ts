@@ -45,11 +45,11 @@ export class EmployeeComponent implements OnInit {
 
   ngOnInit() {
     this.empService.getAll().subscribe(data =>{
-       this.dataSource.data = data;
-       this.employees = data
+      this.dataSource.data = data;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    
   }
 
   loadEmployees() {
