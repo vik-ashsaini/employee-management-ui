@@ -1,24 +1,29 @@
-<h2>{{ id ? 'Edit' : 'Add' }} Employee</h2>
-<form [formGroup]="form" (ngSubmit)="submit()">
-
-  <label>Name:</label>
-  <input formControlName="name" />
-  <div *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
-    <small class="error">Name is required</small>
-  </div><br>
-
-  <label>Position:</label>
-  <input formControlName="position" />
-  <div *ngIf="form.get('position')?.invalid && form.get('position')?.touched">
-    <small class="error">Position is required</small>
-  </div><br>
-
-  <label>Salary:</label>
-  <input type="number" formControlName="salary" />
-  <div *ngIf="form.get('salary')?.invalid && form.get('salary')?.touched">
-    <small *ngIf="form.get('salary')?.errors?.['required']">Salary is required</small>
-    <small *ngIf="form.get('salary')?.errors?.['min']">Salary must be greater than 0</small>
-  </div><br>
-
-  <button type="submit" [disabled]="form.invalid">Save</button>
-</form>
+<h2 mat-dialog-title>{{ data.id === 0 ? 'Add' : 'Edit' }} Employee</h2>
+    <form [formGroup]="form" (ngSubmit)="submit()" mat-dialog-content>
+      <mat-form-field class="full-width">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name">
+         <div *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
+          <small class="error">Name is required</small>
+        </div>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-label>Position</mat-label>
+        <input matInput formControlName="position" />
+        <div *ngIf="form.get('position')?.invalid && form.get('position')?.touched">
+          <small class="error">Position is required</small>
+        </div>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-label>Salary</mat-label>
+        <input matInput type="number" formControlName="salary">
+        <div *ngIf="form.get('salary')?.invalid && form.get('salary')?.touched">
+          <small *ngIf="form.get('salary')?.errors?.['required']">Salary is required</small>
+          <small *ngIf="form.get('salary')?.errors?.['min']">Salary must be greater than 0</small>
+        </div>
+      </mat-form-field>
+      <mat-dialog-actions align="end">
+        <button mat-button type="button" (click)="dialogRef.close()">Cancel</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Save</button>
+      </mat-dialog-actions>
+    </form>

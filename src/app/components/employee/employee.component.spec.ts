@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { EmployeeListComponent } from './employee-list.component';
-import { EmployeeService } from '../../../services/employee.service';
+import { EmployeeComponent } from './employee.component';
+import { EmployeeService } from '../../services/employee.service';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 
-describe('EmployeeListComponent', () => {
-  let component: EmployeeListComponent;
-  let fixture: ComponentFixture<EmployeeListComponent>;
+describe('EmployeeComponent', () => {
+  let component: EmployeeComponent;
+  let fixture: ComponentFixture<EmployeeComponent>;
   let mockService: any;
 
   const mockEmployees = [
@@ -29,7 +29,7 @@ describe('EmployeeListComponent', () => {
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(EmployeeListComponent);
+    fixture = TestBed.createComponent(EmployeeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
