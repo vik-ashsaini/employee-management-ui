@@ -10,7 +10,7 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: '', component: EmployeeComponent, canActivate: [AuthGuard] },
   { path: 'employee',component: EmployeeComponent, canActivate: [AuthGuard] },
-  { path: 'employee/add', component: EmployeeFormComponent, canActivate: [AuthGuard] },
-  { path: 'employee/edit/:id', component: EmployeeFormComponent, canActivate: [AuthGuard] },
-  { path: '**', redirectTo: '' } // ✅ fallback for unknown paths
+  // { path: 'employee/add', component: EmployeeFormComponent, canActivate: [AuthGuard] },
+  // { path: 'employee/edit/:id', component: EmployeeFormComponent, canActivate: [AuthGuard] },
+  { path: '**', redirectTo: 'employee' } // ✅ fallback for unknown paths
 ];

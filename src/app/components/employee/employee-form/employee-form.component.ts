@@ -29,55 +29,73 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
   templateUrl: './employee-form.component.html',
   styleUrl: './employee-form.component.css'
 })
+
 export class EmployeeFormComponent implements OnInit {
-  constructor(public dialogRef: MatDialogRef<EmployeeFormComponent>,
+
+  constructor(
+    public dialogRef: MatDialogRef<EmployeeFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: EmployeeModel,
-    private fb: FormBuilder) {
-    this.form = this.fb.group({
-      id: [data.id],
-      name: [data.name, Validators.required],
-      position: [data.position, Validators.required],
-      salary: [data.salary, [Validators.required, Validators.min(0)]],
-    });
+    private fb: FormBuilder,
+    private empService:EmployeeService
+  ) 
+  {
+    
   }
 
   form!: FormGroup;
   id!: number;
 
   ngOnInit() {
-    // this.form = this.fb.group({
-    //   name: ['', Validators.required],
-    //   position: ['', Validators.required],
-    //   salary: [0, [Validators.required, Validators.min(1)]]
-    // });
+    this.form = this.fb.group({
+      id: [this.data.id],
+      name: [this.data.name, Validators.required],
+      position: [this.data.position, Validators.required],
+      salary: [this.data.salary, [Validators.required, Validators.min(0)]],
+    });
 
     // this.id = +this.route.snapshot.paramMap.get('id')!;
-    // if (this.id) {
-    //   this.service.getById(this.id).subscribe(emp =>  
-    //     this.form.patchValue({
-    //     name: emp.name,
-    //     position: emp.position,
-    //     salary: emp.salary
-    //   })
-    // )}
+     if (this.data.id) {
+      //this.service.getById(this.id).subscribe(emp =>  
+        this.form.patchValue({
+        name: this.data.name,
+        position: this.data.position,
+        salary: this.data.salary
+      })
+    //)
+    }
   }
 
-  submit() {
-    // const formValue = this.form.value;
-    // const data = {
-    //   id:formValue.id??0,
-    //   name: formValue.name ?? '',
-    //   position: formValue.position ?? '',
-    //   salary: formValue.salary ?? 0
-    // };
-    // if (this.id) {
-
-    //   this.service.update(this.id, data).subscribe(() => this.router.navigate(['/']));
-    // } else {
-    //   this.service.create(data).subscribe(() => this.router.navigate(['/']));
-    // }
+  submit() { 
     if (this.form.valid) {
-      this.dialogRef.close(this.form.value);
+      if (this.data.id === 0) 
+      {
+        //this.router.navigate(['/add']);
+        this.empService.create(this.form.value).subscribe(res => {
+          if(res)
+          {
+            console.log("Employee SuccessFully Added");
+          }
+          else
+          {
+            console.log("Error Occured While Saving Data");
+          }
+        });
+      } 
+      else 
+      {
+        //this.router.navigate(['/edit', result.id]);
+        this.empService.update(this.data.id, this.form.value).subscribe(res => {
+          if(res)
+          {
+            console.log("Employee Data SuccessFully updated");
+          }
+          else
+          {
+            console.log("Error Occured While Saving Data");
+          }
+        });
+      }
+      this.dialogRef.close(true);
     }
   }
 }

@@ -28,6 +28,7 @@ import { Router } from '@angular/router';
   templateUrl: './employee.component.html',
   styleUrl: './employee.component.css'
 })
+
 export class EmployeeComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'position', 'salary', 'actions'];
@@ -44,16 +45,15 @@ export class EmployeeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.empService.getAll().subscribe(data =>{
+    this.loadEmployees();
+  }
+
+  loadEmployees() {
+    this.empService.getAll().subscribe(data => {
       this.dataSource.data = data;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
-    
-  }
-
-  loadEmployees() {
-    
   }
 
   applyFilter(event: Event) {
@@ -69,32 +69,28 @@ export class EmployeeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        if (result.id === 0) {
-          this.router.navigate(['/add']);
-          this.empService.create(result).subscribe(() => this.loadEmployees());
-        } else {
-          this.router.navigate(['/edit', result.id]);
-          this.empService.update(result.id, result).subscribe(() => this.loadEmployees());
-        }
+        this.loadEmployees();
       }
     });
   }
 
   deleteEmployee(id: number) {
     if (confirm('Are you sure you want to delete this employee?')) {
-      this.empService.delete(id).subscribe(() => this.loadEmployees());
+      this.empService.delete(id).subscribe((res) => {
+        this.loadEmployees();
+      });
     }
   }
 
   duplicateEmployee(emp: EmployeeModel) {
     const data = {
-      id:emp.id,
       name: emp.name,
       position: emp.position,
       salary: emp.salary
     };
+
     this.empService.create(emp).subscribe(() => {
-     // this.empService.loadEmployees(); // refresh the list
+     this.loadEmployees();
     });
   }
 }
