@@ -6,11 +6,11 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 
 export const routes: Routes = [
- { path: 'login', component: LoginComponent }, // ✅ No guard
-  { path: 'register', component: RegisterComponent }, // ✅ No guard
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: '', component: EmployeeComponent, canActivate: [AuthGuard] },
-  { path: 'employee', redirectTo: '', pathMatch: 'full' }, // ✅ Handles '/employee'
-  { path: 'add', component: EmployeeFormComponent, canActivate: [AuthGuard] },
-  { path: 'edit/:id', component: EmployeeFormComponent, canActivate: [AuthGuard] },
+  { path: 'employee',component: EmployeeComponent, canActivate: [AuthGuard] },
+  { path: 'employee/add', component: EmployeeFormComponent, canActivate: [AuthGuard] },
+  { path: 'employee/edit/:id', component: EmployeeFormComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' } // ✅ fallback for unknown paths
 ];

@@ -1,8 +1,26 @@
-<h2>Register</h2>
-<form [formGroup]="form" (ngSubmit)="submit()">
-  <label>Email:</label>
-  <input formControlName="email" type="email"><br>
-  <label>Password:</label>
-  <input formControlName="password" type="password"><br>
-  <button type="submit">Register</button>
-</form>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Register</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email" required><br>
+        <mat-error *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
+          <span *ngIf="form.get('email')?.errors?.['required']">Email is required</span>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" type="password" required><br>
+        <mat-error *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
+          <!-- {{form.get('password')?.errors | json}} -->
+          <span *ngIf="form.get('password')?.errors?.['required']">Password is required</span>
+          <span *ngIf="form.get('password')?.errors?.['minlength']">Password length Should be greather than 6</span>
+        </mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Register</button>
+    </form>
+  </mat-card-content>
+</mat-card>
