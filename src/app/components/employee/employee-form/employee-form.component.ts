@@ -31,14 +31,14 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 export class EmployeeFormComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<EmployeeFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: EmployeeModel,
-    private fb: FormBuilder){
-      this.form = this.fb.group({
+    private fb: FormBuilder) {
+    this.form = this.fb.group({
       id: [data.id],
       name: [data.name, Validators.required],
       position: [data.position, Validators.required],
       salary: [data.salary, [Validators.required, Validators.min(0)]],
     });
-    }
+  }
 
   form!: FormGroup;
   id!: number;
@@ -75,7 +75,7 @@ export class EmployeeFormComponent implements OnInit {
     // } else {
     //   this.service.create(data).subscribe(() => this.router.navigate(['/']));
     // }
-     if (this.form.valid) {
+    if (this.form.valid) {
       this.dialogRef.close(this.form.value);
     }
   }

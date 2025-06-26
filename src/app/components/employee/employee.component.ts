@@ -14,6 +14,7 @@ import { EmployeeModel } from '../../models/employee.model';
 import { EmployeeFormComponent } from './employee-form/employee-form.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-employee',
@@ -24,7 +25,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatInputModule, MatFormFieldModule, MatButtonModule,
     MatIconModule, MatCardModule,MatToolbarModule
   ],
-  templateUrl: './employee.component.html'
+  templateUrl: './employee.component.html',
+  styleUrl: './employee.component.css'
 })
 export class EmployeeComponent implements OnInit {
 
@@ -37,40 +39,27 @@ export class EmployeeComponent implements OnInit {
   employees: EmployeeModel[] = [];
 
   constructor(private dialog: MatDialog,
-     private empService: EmployeeService) {}
+    private empService: EmployeeService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.loadEmployees();
-    // Safe to assign paginator and sort now
+    this.empService.getAll().subscribe(data =>{
+       this.dataSource.data = data;
+       this.employees = data
+    });
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
   loadEmployees() {
-    this.empService.getAll().subscribe(data =>{
-       this.dataSource.data = data;
-       this.employees = data
-    });
+    
   }
 
   applyFilter(event: Event) {
     const value = (event.target as HTMLInputElement).value;
     this.dataSource.filter = value.trim().toLowerCase();
   }
-
-  // delete(id: number) {
-  //   if (confirm('Are you sure?')) {
-  //     this.service.delete(id).subscribe(() => this.service.loadEmployees());
-  //   }
-  // }
-
-  // edit(id: number) {
-  //   this.router.navigate(['/edit', id]);
-  // }
-
-  // add() {
-  //   this.router.navigate(['/add']);
-  // }
 
   openDialog(employee?: EmployeeModel) {
     const dialogRef = this.dialog.open(EmployeeFormComponent, {
@@ -81,8 +70,10 @@ export class EmployeeComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (result.id === 0) {
+          this.router.navigate(['/add']);
           this.empService.create(result).subscribe(() => this.loadEmployees());
         } else {
+          this.router.navigate(['/edit', result.id]);
           this.empService.update(result.id, result).subscribe(() => this.loadEmployees());
         }
       }
@@ -95,7 +86,7 @@ export class EmployeeComponent implements OnInit {
     }
   }
 
-  duplicate(emp: EmployeeModel) {
+  duplicateEmployee(emp: EmployeeModel) {
     const data = {
       id:emp.id,
       name: emp.name,

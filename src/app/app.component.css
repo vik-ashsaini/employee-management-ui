@@ -1,6 +1,5 @@
 .container {
-  margin: 20px auto;
-  max-width: 800px;
+  margin: 5px;
 }
 
 input.ng-invalid.ng-touched {
